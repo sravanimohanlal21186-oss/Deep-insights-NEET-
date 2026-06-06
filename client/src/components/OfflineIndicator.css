@@ -1,0 +1,128 @@
+.offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.offline-indicator.offline {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.offline-indicator.online {
+  background-color: #51cf66;
+  color: white;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(81, 207, 102, 0.2);
+  font-size: 12px;
+}
+
+.indicator-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.indicator-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.indicator-dot.online {
+  background-color: #51cf66;
+}
+
+.indicator-dot.offline {
+  background-color: #ffd93d;
+}
+
+.sync-button,
+.update-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.sync-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.sync-button:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.sync-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.update-button {
+  background-color: #fff;
+  color: #ff6b6b;
+  font-weight: 700;
+  animation: pulse-button 1s infinite;
+}
+
+.update-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse-button {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+  }
+}
+
+@media (max-width: 600px) {
+  .indicator-content {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .offline-indicator.offline {
+    padding: 8px;
+  }
+
+  .sync-button,
+  .update-button {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}

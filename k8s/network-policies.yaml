@@ -1,0 +1,92 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: neet-insights-pdb
+spec:
+  minAvailable: 8
+  selector:
+    matchLabels:
+      app: neet-insights
+
+---
+apiVersion: policy/v1
+kind: NetworkPolicy
+metadata:
+  name: neet-insights-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: neet-insights
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ingress-controller
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: neet-insights-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rate-limit: "1000"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - deepinsightsneet.com
+    - www.deepinsightsneet.com
+    secretName: neet-insights-tls
+  rules:
+  - host: deepinsightsneet.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: neet-insights-service
+            port:
+              number: 80
+  - host: www.deepinsightsneet.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: neet-insights-service
+            port:
+              number: 80

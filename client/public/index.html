@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#667eea" />
+    <meta
+      name="description"
+      content="Deep Insights NEET - Advanced exam preparation platform that works offline"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NEET Insights">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>Deep Insights NEET - Advanced Exam Preparation</title>
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+      }
+      
+      #root {
+        width: 100%;
+        min-height: 100vh;
+      }
+
+      /* Loading state */
+      .app-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 12px;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* No JavaScript fallback */
+      noscript {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: #fff;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div>
+        <h2>JavaScript Required</h2>
+        <p>This application requires JavaScript to be enabled in your browser.</p>
+        <p>Please enable JavaScript and refresh the page.</p>
+      </div>
+    </noscript>
+
+    <div id="root">
+      <div class="app-loading">
+        <div class="spinner"></div>
+        Loading Deep Insights NEET...
+      </div>
+    </div>
+
+    <script>
+      // Register service worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js').then(
+            registration => console.log('✓ Service Worker registered'),
+            err => console.log('✗ Service Worker registration failed:', err)
+          );
+        });
+      }
+
+      // Handle app visibility for sync
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden === false) {
+          // App came to foreground - trigger sync
+          if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: 'SYNC_ON_FOREGROUND' });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+.leaderboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: slideIn 0.6s ease-out;
+}
+
+.leaderboard-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: slideIn 0.6s ease-out;
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.8rem 1.5rem;
+  border: 2px solid #667eea;
+  background: transparent;
+  color: #667eea;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.filter-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Leaderboard Wrapper */
+.leaderboard-wrapper {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  animation: slideIn 0.8s ease-out;
+}
+
+.leaderboard-table {
+  width: 100%;\n  border-collapse: collapse;\n  background: white;\n}\n\n.leaderboard-table thead {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  color: white;\n}\n\n.leaderboard-table th {\n  padding: 1.5rem;\n  text-align: left;\n  font-weight: 700;\n  font-size: 1rem;\n  text-transform: uppercase;\n  letter-spacing: 1px;\n}\n\n.leaderboard-table tbody tr {\n  border-bottom: 1px solid rgba(102, 126, 234, 0.1);\n  transition: all 0.3s ease;\n  animation: slideIn 0.6s ease-out backwards;\n}\n\n.leaderboard-row {\n  animation: slideIn 0.6s ease-out backwards;\n}\n\n.leaderboard-table tbody tr:hover {\n  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);\n  transform: scale(1.01);\n}\n\n.leaderboard-table tbody tr.top-rank {\n  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(200, 200, 200, 0.05) 100%);\n  font-weight: 600;\n}\n\n.leaderboard-table tbody tr.current-user {\n  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);\n  box-shadow: inset 0 0 10px rgba(102, 126, 234, 0.2);\n}\n\n.leaderboard-table td {\n  padding: 1.2rem 1.5rem;\n  font-size: 1rem;\n}\n\n/* Rank Cell */\n.rank-cell {\n  text-align: center;\n}\n\n.rank-badge {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: 50px;\n  height: 50px;\n  border-radius: 50%;\n  color: white;\n  font-weight: 700;\n  font-size: 1.5rem;\n  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);\n  animation: float 3s ease-in-out infinite;\n}\n\n/* Player Cell */\n.player-cell {\n  text-align: left;\n}\n\n.player-info {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n}\n\n.player-avatar {\n  font-size: 2rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.player-name {\n  font-weight: 600;\n  color: #333;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n\n.player-name.you {\n  color: #667eea;\n  font-weight: 700;\n}\n\n.you-badge {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  color: white;\n  padding: 0.2rem 0.6rem;\n  border-radius: 10px;\n  font-size: 0.75rem;\n  font-weight: 600;\n}\n\n/* Score Cell */\n.score-cell {\n  text-align: center;\n}\n\n.score-value {\n  font-weight: 700;\n  font-size: 1.3rem;\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  background-clip: text;\n}\n\n.score-max {\n  color: #999;\n  font-size: 0.9rem;\n  margin-left: 0.25rem;\n}\n\n/* Streak Cell */\n.streak-cell {\n  text-align: center;\n}\n\n.streak-display {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n\n.streak-fire {\n  font-size: 1.5rem;\n  animation: float 2s ease-in-out infinite;\n}\n\n.streak-number {\n  font-weight: 700;\n  color: #ff6b6b;\n}\n\n/* Trend Cell */\n.trend-cell {\n  text-align: center;\n  font-size: 1.2rem;\n}\n\n/* Leaderboard Stats */\n.leaderboard-stats {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n  gap: 1.5rem;\n  margin-bottom: 2rem;\n}\n\n.stat-box {\n  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);\n  padding: 1.5rem;\n  border-radius: 15px;\n  border: 2px solid rgba(102, 126, 234, 0.2);\n  display: flex;\n  align-items: center;\n  gap: 1.5rem;\n  transition: all 0.3s ease;\n  animation: slideIn 0.6s ease-out backwards;\n}\n\n.stat-box:hover {\n  transform: translateY(-5px);\n  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);\n}\n\n.stat-icon {\n  font-size: 2rem;\n}\n\n.stat-info {\n  flex: 1;\n}\n\n.stat-label {\n  font-size: 0.9rem;\n  color: #666;\n  font-weight: 600;\n  text-transform: uppercase;\n  letter-spacing: 1px;\n  margin-bottom: 0.3rem;\n}\n\n.stat-value {\n  font-size: 1.8rem;\n  font-weight: 700;\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  background-clip: text;\n}\n\n/* Call to Action */\n.leaderboard-cta {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  color: white;\n  padding: 2rem;\n  border-radius: 15px;\n  text-align: center;\n  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);\n  animation: slideIn 1s ease-out;\n}\n\n.leaderboard-cta p {\n  font-size: 1.2rem;\n  margin-bottom: 1rem;\n  font-weight: 600;\n}\n\n.cta-button {\n  padding: 0.8rem 2rem;\n  background: white;\n  color: #667eea;\n  border: none;\n  border-radius: 25px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  font-size: 1rem;\n}\n\n.cta-button:hover {\n  transform: scale(1.05);\n  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);\n}\n\n/* Responsive Design */\n@media (max-width: 768px) {\n  .leaderboard-container {\n    padding: 1rem;\n  }\n\n  .leaderboard-title {\n    font-size: 1.8rem;\n  }\n\n  .filter-buttons {\n    gap: 0.5rem;\n  }\n\n  .filter-btn {\n    padding: 0.6rem 1rem;\n    font-size: 0.85rem;\n  }\n\n  .leaderboard-table {\n    font-size: 0.9rem;\n  }\n\n  .leaderboard-table th {\n    padding: 1rem;\n  }\n\n  .leaderboard-table td {\n    padding: 0.8rem;\n  }\n\n  .rank-badge {\n    width: 40px;\n    height: 40px;\n    font-size: 1.2rem;\n  }\n\n  .player-avatar {\n    font-size: 1.5rem;\n  }\n\n  .score-value {\n    font-size: 1.1rem;\n  }\n\n  .leaderboard-stats {\n    grid-template-columns: 1fr;\n  }\n\n  .leaderboard-cta {\n    padding: 1.5rem;\n  }\n}

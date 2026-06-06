@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  max_connections: "500"
+  cache_ttl: "300"
+  log_level: "warn"
+  request_timeout: "30000"
+  rate_limit_window: "900000"
+  rate_limit_max: "1000"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+type: Opaque
+stringData:
+  jwt_secret: "your-secure-jwt-secret-here"
+  api_key: "your-secure-api-key-here"
+  db_password: "your-secure-db-password"
+  redis_password: "your-secure-redis-password"
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: postgres-read-replica-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: postgres-read-replica
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-read-replica
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: postgres-read-replica
+  template:
+    metadata:
+      labels:
+        app: postgres-read-replica
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: "trust"
+        - name: PGUSER
+          value: "postgres"
+        volumeMounts:
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+      volumes:
+      - name: pgdata
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-read-service
+spec:
+  selector:
+    app: postgres-read-replica
+  ports:
+  - port: 5432
+    targetPort: 5432

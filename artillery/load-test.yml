@@ -1,0 +1,62 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 100
+      name: 'Warm up'
+    - duration: 300
+      arrivalRate: 2000
+      name: 'Ramp up'
+    - duration: 600
+      arrivalRate: 5000
+      name: 'Sustained load'
+    - duration: 60
+      arrivalRate: 0
+      name: 'Cool down'
+  defaults:
+    headers:
+      User-Agent: 'Deep-Insights-LoadTest'
+
+scenarios:
+  - name: 'Browse questions'
+    weight: 60
+    flow:
+      - get:
+          url: '/api/questions?page=1&limit=20'
+          capture:
+            - json: 'questions[0].id'
+              as: 'questionId'
+      - think: 2
+      - get:
+          url: '/api/questions/{{ questionId }}'
+
+  - name: 'Take exam'
+    weight: 30
+    flow:
+      - post:
+          url: '/api/exams/exam-uuid/start'
+          json:
+            userId: 'user-uuid'
+          capture:
+            - json: 'sessionId'
+              as: 'sessionId'
+      - think: 30
+      - post:
+          url: '/api/results'
+          json:
+            sessionId: '{{ sessionId }}'
+            userId: 'user-uuid'
+            score: 85
+            timeTaken: 3600
+            answers:
+              q1: 'A'
+              q2: 'B'
+
+  - name: 'View results'
+    weight: 10
+    flow:
+      - get:
+          url: '/api/results/user/user-uuid'
+      - think: 3
+      - get:
+          url: '/api/users/user-uuid'
